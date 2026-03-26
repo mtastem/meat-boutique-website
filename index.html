@@ -1,0 +1,3512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meat Boutique - Premium Sourcing & Grading</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        :root {
+            --black: #0A0A0A;
+            --card: #1A1A1A;
+            --surface: #111111;
+            --gold: #C9A96E;
+            --burgundy: #6B2D4A;
+            --light-canvas: #FAF8F4;
+            --cream: #F5F0E8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes floatGold {
+            0%, 100% {
+                transform: translateY(-20px);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(20px);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(201, 169, 110, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(201, 169, 110, 0.6);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+            to {
+                height: 100%;
+                opacity: 1;
+            }
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1410 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.08) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: floatGold 8s ease-in-out infinite;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(107, 45, 74, 0.06) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            animation: floatGold 10s ease-in-out infinite 2s;
+        }
+
+        .fade-in-element {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+
+        .observe-fade {
+            opacity: 0;
+        }
+
+        .observe-fade.visible {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .gold-line {
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            height: 2px;
+            opacity: 0.6;
+        }
+
+        .section-number {
+            position: absolute;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 700;
+            opacity: 0.04;
+            font-family: 'Playfair Display', serif;
+            top: 20px;
+            right: 20px;
+            pointer-events: none;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(201, 169, 110, 0.2);
+        }
+
+        .gold-glow {
+            position: relative;
+        }
+
+        .gold-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--gold), transparent);
+            opacity: 0;
+            border-radius: inherit;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card-hover:hover .gold-glow::before {
+            opacity: 0.3;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold) 0%, #d4a574 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stagger-word {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .stagger-1 { animation-delay: 0s; }
+        .stagger-2 { animation-delay: 0.4s; }
+        .stagger-3 { animation-delay: 0.8s; }
+
+        .stripe-bg {
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(201, 169, 110, 0.02) 2px,
+                    rgba(201, 169, 110, 0.02) 4px
+                );
+        }
+
+        .marble-texture {
+            background-image:
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><defs><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="2"/><feDisplacementMap in="SourceGraphic" scale="100"/></filter></defs><rect width="400" height="400" fill="%23FAF8F4"/><rect width="400" height="400" fill="%23F5F0E8" opacity="0.3" filter="url(%23noise)"/></svg>');
+        }
+
+        .stat-card {
+            border-top: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(17, 17, 17, 0.5));
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 700;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .bag-mockup {
+            position: relative;
+            width: 200px;
+            height: 280px;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1410 100%);
+            border-radius: 20px 20px 8px 8px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            margin: 20px auto;
+        }
+
+        .bag-mockup::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 12px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold) 100%);
+            border-radius: 6px;
+        }
+
+        .bag-label {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .bag-window {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(245, 240, 232, 0.3) 0%, rgba(250, 248, 244, 0.1) 100%);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 8px;
+            margin: 40px 0 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bag-window::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.4), transparent);
+            border-radius: 4px;
+            opacity: 0.6;
+        }
+
+        .bag-weight {
+            position: absolute;
+            bottom: 12px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: var(--gold);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .bag-reserve {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            background: var(--burgundy);
+            color: white;
+            padding: 4px 12px;
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 2px;
+        }
+
+        .box-mockup {
+            perspective: 1000px;
+            width: 280px;
+            height: 320px;
+            margin: 40px auto;
+        }
+
+        .box-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #0A0A0A;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            border-radius: 4px;
+            padding: 24px;
+            transform-style: preserve-3d;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .box-stripe {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--burgundy);
+            border-radius: 0 0 4px 4px;
+        }
+
+        .box-label {
+            position: relative;
+            z-index: 2;
+            color: var(--gold);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item {
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+
+        .timeline-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--burgundy), #8b3f5c);
+            border: 2px solid var(--gold);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-canvas);
+            font-weight: 600;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            transform: translateX(0);
+        }
+
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+
+        .journey-stop {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+            flex-shrink: 0;
+        }
+
+        .journey-connector {
+            flex: 1;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            position: relative;
+            top: -30px;
+        }
+
+        .channel-hub {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 40px auto;
+        }
+
+        .channel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--burgundy), #8b3f5c);
+            border: 3px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .channel-spoke {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 2px;
+            background: var(--gold);
+            transform-origin: left center;
+        }
+
+        .platform-layer {
+            position: relative;
+            height: 100px;
+            background: linear-gradient(90deg, rgba(26, 26, 26, 0.6), rgba(17, 17, 17, 0.6));
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 12px 0;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .layer-arrow {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 24px;
+        }
+
+        .metric-gauge {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .gauge-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--burgundy) 0deg, var(--gold) 180deg, var(--card) 180deg);
+            opacity: 0.3;
+        }
+
+        .gauge-inner {
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background: var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .unboxing-step {
+            position: relative;
+            text-align: center;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .unboxing-step.active {
+            opacity: 1;
+        }
+
+        .unboxing-step.active .timeline-circle {
+            box-shadow: 0 0 20px rgba(201, 169, 110, 0.6);
+            transform: scale(1.1);
+        }
+
+        .decision-card {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 24px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 8px;
+        }
+
+        .decision-option {
+            text-align: center;
+            padding: 16px;
+        }
+
+        .decision-vs {
+            font-size: 20px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .trust-item-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+        }
+
+        .constellation {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin: 40px 0;
+        }
+
+        .constellation-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            z-index: 10;
+            background: radial-gradient(circle, var(--card) 0%, var(--surface) 100%);
+        }
+
+        .constellation-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .constellation-element::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            opacity: 0.3;
+        }
+
+        .growth-milestone {
+            position: relative;
+            text-align: center;
+            flex: 1;
+        }
+
+        .milestone-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--burgundy), #8b3f5c);
+            border: 3px solid var(--gold);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .hero-word-break {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-number {
+                font-size: 3rem;
+            }
+
+            .decision-card {
+                grid-template-columns: 1fr;
+            }
+
+            .decision-vs {
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+            }
+
+            .timeline-line {
+                display: none !important;
+            }
+
+            .journey-connector {
+                display: none !important;
+            }
+
+            .journey-stop {
+                margin: 20px 0;
+            }
+
+            .constellation {
+                height: auto;
+            }
+
+            .constellation-element {
+                position: static;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white" style="background-color: #0A0A0A;">
+
+<!-- HERO SECTION -->
+<section class="hero-bg relative w-full min-h-screen flex items-center justify-center py-20 overflow-hidden">
+    <div class="section-number">01</div>
+
+    <!-- Floating dots -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute w-2 h-2 bg-yellow-600 rounded-full opacity-30 animate-ping" style="top: 20%; left: 10%; animation-duration: 4s;"></div>
+        <div class="absolute w-1 h-1 bg-yellow-600 rounded-full opacity-20 animate-ping" style="top: 40%; right: 15%; animation-duration: 5s; animation-delay: 1s;"></div>
+        <div class="absolute w-2 h-2 bg-yellow-600 rounded-full opacity-25 animate-ping" style="bottom: 30%; left: 20%; animation-duration: 6s; animation-delay: 2s;"></div>
+        <div class="absolute w-1.5 h-1.5 bg-yellow-600 rounded-full opacity-20 animate-ping" style="top: 60%; right: 25%; animation-duration: 4.5s; animation-delay: 1.5s;"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-5 text-center">
+        <h1 class="text-8xl md:text-9xl font-bold leading-tight mb-8">
+            <span class="stagger-word stagger-1" style="color: var(--gold);">MEAT</span>
+        </h1>
+
+        <div class="h-1 w-32 mx-auto mb-8 stagger-word stagger-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+
+        <h1 class="text-7xl md:text-8xl font-bold leading-tight stagger-word stagger-3" style="color: white;">
+            BOUTIQUE
+        </h1>
+
+        <p class="text-xl md:text-2xl mt-12 text-gray-300 fade-in-element fade-in-delay-3 max-w-2xl mx-auto" style="font-weight: 400;">
+            Premium sourcing, grading, and white-glove service for the world's most discerning palates
+        </p>
+
+        <button class="mt-12 fade-in-element fade-in-delay-3 px-8 py-4 border-2 text-lg font-semibold transition-all hover:bg-yellow-700 hover:border-yellow-700" style="border-color: var(--gold); color: var(--gold);">
+            EXPLORE THE COLLECTION
+        </button>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- TRUST BAR SECTION -->
+<section class="bg-black py-16 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <!-- Flash Frozen -->
+            <div class="text-center observe-fade">
+                <div class="trust-item-icon mx-auto mb-4">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M30 5v10M30 45v10M5 30h10M45 30h10M12 12l7 7M41 41l7 7M48 12l-7 7M19 41l-7-7" />
+                        <circle cx="30" cy="30" r="8" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-semibold tracking-wider mb-2">FLASH-FROZEN</h3>
+                <p class="text-gray-400 text-xs">Locked in freshness</p>
+            </div>
+
+            <div class="hidden md:block border-l gold-line" style="border-color: var(--gold); opacity: 0.3;"></div>
+
+            <!-- No Additives -->
+            <div class="text-center observe-fade">
+                <div class="trust-item-icon mx-auto mb-4">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M30 5L40 15L30 25L20 15Z" />
+                        <circle cx="30" cy="30" r="20" />
+                        <path d="M22 30h16M30 22v16" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-semibold tracking-wider mb-2">NO ADDITIVES</h3>
+                <p class="text-gray-400 text-xs">Pure, authentic meat</p>
+            </div>
+
+            <div class="hidden md:block border-l gold-line" style="border-color: var(--gold); opacity: 0.3;"></div>
+
+            <!-- Traceable Origin -->
+            <div class="text-center observe-fade">
+                <div class="trust-item-icon mx-auto mb-4">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="30" r="20" />
+                        <path d="M30 15v15h12" />
+                        <path d="M40 20L30 25L35 35" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-semibold tracking-wider mb-2">TRACEABLE ORIGIN</h3>
+                <p class="text-gray-400 text-xs">Know where it comes from</p>
+            </div>
+
+            <div class="hidden md:block border-l gold-line" style="border-color: var(--gold); opacity: 0.3;"></div>
+
+            <!-- Premium Graded -->
+            <div class="text-center observe-fade">
+                <div class="trust-item-icon mx-auto mb-4">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M30 8L35 20H48L38 28L42 40L30 32L18 40L22 28L12 20H25Z" />
+                    </svg>
+                </div>
+                <h3 class="text-sm font-semibold tracking-wider mb-2">PREMIUM GRADED</h3>
+                <p class="text-gray-400 text-xs">Only the finest cuts</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- THESIS SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">02</div>
+    <div class="max-w-6xl mx-auto">
+
+        <div class="relative mb-20 observe-fade">
+            <div class="absolute -top-12 -left-6 text-9xl font-bold opacity-5" style="color: var(--gold);">"</div>
+            <blockquote class="text-4xl md:text-5xl font-bold leading-tight mb-6 max-w-3xl">
+                <span class="gradient-text">The gap between commodity frozen</span> and truly premium meat is where the opportunity lives
+            </blockquote>
+            <p class="text-gray-400 text-lg">There's a multi-billion-dollar opportunity for a brand that knows sourcing, grading, and service</p>
+        </div>
+
+        <!-- STAT CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            <div class="stat-card p-8 rounded-8px observe-fade">
+                <div class="stat-number counter" data-target="2400000000">2.4B</div>
+                <p class="text-sm text-gray-400 mt-2">Global premium meat market</p>
+            </div>
+            <div class="stat-card p-8 rounded-8px observe-fade">
+                <div class="stat-number counter" data-target="15">15%</div>
+                <p class="text-sm text-gray-400 mt-2">Annual growth in premium segment</p>
+            </div>
+            <div class="stat-card p-8 rounded-8px observe-fade">
+                <div class="stat-number counter" data-target="78">78%</div>
+                <p class="text-sm text-gray-400 mt-2">Willing to pay premium for quality</p>
+            </div>
+        </div>
+
+        <!-- GAP DIAGRAM -->
+        <div class="mt-24 observe-fade">
+            <h3 class="text-2xl font-bold mb-12 text-center">The Market Opportunity</h3>
+            <div class="grid grid-cols-3 gap-8 items-center">
+                <div class="text-center">
+                    <div style="width: 120px; height: 120px; background: rgba(26, 26, 26, 0.8); border: 2px solid #666; border-radius: 8px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-xs text-gray-400">Premium Fresh</span>
+                    </div>
+                    <p class="text-sm font-semibold">Butcher Shops</p>
+                    <p class="text-xs text-gray-500">Limited reach, high cost</p>
+                </div>
+
+                <div class="relative">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(180deg, rgba(201, 169, 110, 0.1) 0%, rgba(201, 169, 110, 0.05) 100%); border-left: 3px solid var(--gold); border-right: 3px solid var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-center">
+                            <div style="font-size: 24px; color: var(--gold); font-weight: 700; mb-2;">THE</div>
+                            <div style="font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 2px;">OPPORTUNITY</div>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div style="width: 120px; height: 120px; background: rgba(26, 26, 26, 0.8); border: 2px solid #666; border-radius: 8px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-xs text-gray-400">Commodity Frozen</span>
+                    </div>
+                    <p class="text-sm font-semibold">Mass Market</p>
+                    <p class="text-xs text-gray-500">Consistent, accessible, generic</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- PROBLEM SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">03</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-16 text-center" style="color: var(--surface);">The Problem</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Card 1: No Trust -->
+            <div class="card-hover observe-fade bg-white rounded-12px p-12 relative overflow-hidden group" style="border: 1px solid #ddd;">
+                <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="z-index: -1;"></div>
+                <div class="w-16 h-16 mb-6 mx-auto text-red-700">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="30" r="20" />
+                        <path d="M20 20L40 40M40 20L20 40" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center" style="color: var(--burgundy);">No Trust</h3>
+                <p class="text-center text-gray-600">Consumers have no way to verify quality, origin, or authenticity of frozen meat products</p>
+            </div>
+
+            <!-- Card 2: Inconsistent Quality -->
+            <div class="card-hover observe-fade bg-white rounded-12px p-12 relative overflow-hidden group" style="border: 1px solid #ddd;">
+                <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="z-index: -1;"></div>
+                <div class="w-16 h-16 mb-6 mx-auto text-red-700">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="20" cy="30" r="8" />
+                        <circle cx="30" cy="20" r="8" />
+                        <circle cx="40" cy="30" r="8" />
+                        <circle cx="30" cy="40" r="8" />
+                        <path d="M28 30L32 30M30 28V32" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center" style="color: var(--burgundy);">Inconsistent Quality</h3>
+                <p class="text-center text-gray-600">Grading standards vary widely; the same product from different batches is never the same</p>
+            </div>
+
+            <!-- Card 3: Zero Portioning -->
+            <div class="card-hover observe-fade bg-white rounded-12px p-12 relative overflow-hidden group" style="border: 1px solid #ddd;">
+                <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="z-index: -1;"></div>
+                <div class="w-16 h-16 mb-6 mx-auto text-red-700">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="10" y="15" width="40" height="30" rx="2" />
+                        <line x1="30" y1="15" x2="30" y2="45" />
+                        <line x1="10" y1="30" x2="50" y2="30" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center" style="color: var(--burgundy);">Zero Portioning</h3>
+                <p class="text-center text-gray-600">Buy bulk or nothing; no flexibility for home chefs, restaurants, or small businesses</p>
+            </div>
+
+            <!-- Card 4: No Service Layer -->
+            <div class="card-hover observe-fade bg-white rounded-12px p-12 relative overflow-hidden group" style="border: 1px solid #ddd;">
+                <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="z-index: -1;"></div>
+                <div class="w-16 h-16 mb-6 mx-auto text-red-700">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="25" r="8" />
+                        <path d="M18 40c0-6 5-10 12-10s12 4 12 10" />
+                        <line x1="22" y1="35" x2="38" y2="35" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center" style="color: var(--burgundy);">No Service Layer</h3>
+                <p class="text-center text-gray-600">No education, no guidance, no relationship; just transactional commodity sales</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- SOLUTION SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">04</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-16 text-center">The Solution</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20">
+            <!-- Pillar 1 -->
+            <div class="card-hover observe-fade gold-glow rounded-12px p-12 relative" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(17, 17, 17, 0.9) 100%); border: 1px solid rgba(201, 169, 110, 0.3);">
+                <div style="height: 3px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px;"></div>
+                <div class="w-16 h-16 mx-auto mb-6 text-yellow-600">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="30" r="18" />
+                        <path d="M22 30h16M30 22v16" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-4">Verified Quality</h3>
+                <p class="text-center text-gray-400">GFS partnerships + Prime Lab grading ensures every cut meets premium standards</p>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="card-hover observe-fade gold-glow rounded-12px p-12 relative" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(17, 17, 17, 0.9) 100%); border: 1px solid rgba(201, 169, 110, 0.3);">
+                <div style="height: 3px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px;"></div>
+                <div class="w-16 h-16 mx-auto mb-6 text-yellow-600">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="30" r="18" />
+                        <path d="M30 15v15h12" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-4">Flexible Formats</h3>
+                <p class="text-center text-gray-400">Portioned packs, boxes, or bulk; tailored to customers' needs and budgets</p>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="card-hover observe-fade gold-glow rounded-12px p-12 relative" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(17, 17, 17, 0.9) 100%); border: 1px solid rgba(201, 169, 110, 0.3);">
+                <div style="height: 3px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px;"></div>
+                <div class="w-16 h-16 mx-auto mb-6 text-yellow-600">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="30" cy="30" r="18" />
+                        <path d="M20 30h20M30 20v20" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-4">Brand & Service</h3>
+                <p class="text-center text-gray-400">Education, guidance, and premium experience; build lasting customer relationships</p>
+            </div>
+        </div>
+
+        <!-- SOLUTION EQUATION -->
+        <div class="mt-20 observe-fade">
+            <h3 class="text-xl font-semibold text-center mb-12" style="color: var(--gold);">OUR ADVANTAGE</h3>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-center md:text-left">
+                <div>
+                    <div class="text-4xl font-bold mb-2">GFS</div>
+                    <p class="text-xs text-gray-400">Global sourcing</p>
+                </div>
+                <div style="color: var(--gold); font-size: 24px;">+</div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">Prime Lab</div>
+                    <p class="text-xs text-gray-400">Scientific grading</p>
+                </div>
+                <div style="color: var(--gold); font-size: 24px;">=</div>
+                <div>
+                    <div class="text-4xl font-bold mb-2" style="color: var(--gold);">MEAT BOUTIQUE</div>
+                    <p class="text-xs text-gray-400">Premium brand</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- PRODUCT UNIVERSE SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">05</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center" style="color: var(--surface);">Product Universe</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Premium Cuts -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <path d="M50 40 Q80 30 110 40 L120 100 Q110 120 80 130 Q50 120 40 100 Z" />
+                        <path d="M60 50 Q70 48 85 52" opacity="0.6" />
+                        <path d="M65 70 Q75 68 90 75" opacity="0.6" />
+                        <path d="M62 90 Q72 88 87 95" opacity="0.6" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Premium Cuts</h3>
+                    <p class="text-sm text-gray-600">Hand-selected ribeyes, filets, tomahawks—graded and vacuum-sealed</p>
+                </div>
+            </div>
+
+            <!-- Portioned Packs -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <rect x="60" y="40" width="35" height="50" rx="2" />
+                        <rect x="105" y="40" width="35" height="50" rx="2" />
+                        <rect x="60" y="100" width="35" height="50" rx="2" />
+                        <rect x="105" y="100" width="35" height="50" rx="2" />
+                        <line x1="67" y1="45" x2="88" y2="85" stroke="#C9A96E" opacity="0.4" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Portioned Packs</h3>
+                    <p class="text-sm text-gray-600">250g, 400g, 750g portions; perfect for home chefs and restaurants</p>
+                </div>
+            </div>
+
+            <!-- Grill Collections -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <rect x="50" y="50" width="100" height="70" rx="4" />
+                        <line x1="60" y1="60" x2="60" y2="110" />
+                        <line x1="75" y1="60" x2="75" y2="110" />
+                        <line x1="90" y1="60" x2="90" y2="110" />
+                        <line x1="105" y1="60" x2="105" y2="110" />
+                        <line x1="120" y1="60" x2="120" y2="110" />
+                        <path d="M130 55 L140 45 L145 50" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Grill Collections</h3>
+                    <p class="text-sm text-gray-600">Curated sets for grilling; cuts, timing guides, and pairing suggestions</p>
+                </div>
+            </div>
+
+            <!-- Household Essentials -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <path d="M100 30 L130 60 L130 130 L70 130 L70 60 Z" />
+                        <line x1="100" y1="60" x2="100" y2="130" />
+                        <line x1="85" y1="60" x2="85" y2="130" />
+                        <line x1="115" y1="60" x2="115" y2="130" />
+                        <circle cx="85" cy="95" r="4" />
+                        <circle cx="100" cy="95" r="4" />
+                        <circle cx="115" cy="95" r="4" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Household Essentials</h3>
+                    <p class="text-sm text-gray-600">Ground beef, steak strips, and everyday cuts for the modern kitchen</p>
+                </div>
+            </div>
+
+            <!-- Spice Rubs -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <rect x="75" y="45" width="50" height="70" rx="2" />
+                        <circle cx="100" cy="70" r="12" opacity="0.4" />
+                        <circle cx="92" cy="85" r="8" opacity="0.5" />
+                        <circle cx="108" cy="90" r="7" opacity="0.4" />
+                        <path d="M75 50 Q100 40 125 50" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Spice Rubs</h3>
+                    <p class="text-sm text-gray-600">Proprietary blends curated to complement each cut perfectly</p>
+                </div>
+            </div>
+
+            <!-- Curated Boxes -->
+            <div class="card-hover observe-fade rounded-12px overflow-hidden" style="background: white; border: 1px solid #ddd;">
+                <div class="h-48 bg-gradient-to-b from-gray-800 to-gray-700 flex items-center justify-center relative overflow-hidden">
+                    <svg viewBox="0 0 200 160" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-32 h-32">
+                        <path d="M60 80 L100 50 L140 80 L140 130 L60 130 Z" />
+                        <path d="M100 50 L100 80" />
+                        <circle cx="85" cy="100" r="5" opacity="0.6" />
+                        <circle cx="100" cy="105" r="5" opacity="0.6" />
+                        <circle cx="115" cy="100" r="5" opacity="0.6" />
+                    </svg>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--surface);">Curated Boxes</h3>
+                    <p class="text-sm text-gray-600">Monthly subscriptions with seasonal cuts, education, and exclusive access</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- PACKAGING SYSTEM SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">06</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center">Packaging System</h2>
+
+        <div class="flex flex-col md:flex-row items-center justify-center gap-12 mb-20">
+            <!-- Small Bag -->
+            <div class="observe-fade">
+                <div class="bag-mockup" style="width: 160px; height: 220px;">
+                    <div class="bag-label">MEAT</div>
+                    <div class="bag-window" style="height: 100px;"></div>
+                    <div class="bag-weight">250G</div>
+                    <div class="bag-reserve" style="width: 50px; height: 25px;">RESERVE</div>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4">Individual</p>
+            </div>
+
+            <!-- Medium Bag -->
+            <div class="observe-fade">
+                <div class="bag-mockup" style="width: 200px; height: 280px;">
+                    <div class="bag-label">MEAT BOUTIQUE</div>
+                    <div class="bag-window" style="height: 140px;"></div>
+                    <div class="bag-weight">RIBEYE • 400G</div>
+                    <div class="bag-reserve">RESERVE</div>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4">Standard</p>
+            </div>
+
+            <!-- Large Bag -->
+            <div class="observe-fade">
+                <div class="bag-mockup" style="width: 240px; height: 340px;">
+                    <div class="bag-label">MEAT BOUTIQUE RESERVE</div>
+                    <div class="bag-window" style="height: 170px;"></div>
+                    <div class="bag-weight">SELECTION • 750G</div>
+                    <div class="bag-reserve" style="width: 60px; height: 30px;">RESERVE</div>
+                </div>
+                <p class="text-center text-xs text-gray-400 mt-4">Premium</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16 observe-fade">
+            <div class="text-center">
+                <h4 class="text-lg font-semibold mb-2" style="color: var(--gold);">Heritage Band</h4>
+                <p class="text-sm text-gray-400">Black with gold wordmark<br/>Premium positioning</p>
+            </div>
+            <div class="text-center">
+                <h4 class="text-lg font-semibold mb-2" style="color: var(--gold);">Transparency Window</h4>
+                <p class="text-sm text-gray-400">Cream gradient with meat silhouette<br/>Product visibility</p>
+            </div>
+            <div class="text-center">
+                <h4 class="text-lg font-semibold mb-2" style="color: var(--gold);">Information Zone</h4>
+                <p class="text-sm text-gray-400">Clear labeling with grade and weight<br/>Trace identity</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- BOX EXPERIENCE SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">07</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center" style="color: var(--surface);">Box Experience</h2>
+
+        <!-- Box Mockup -->
+        <div class="flex justify-center mb-20 observe-fade">
+            <div class="box-mockup">
+                <div class="box-face">
+                    <div class="box-label">MEAT BOUTIQUE</div>
+                    <div style="text-align: center; font-size: 12px; color: #999;">Premium Subscription Box</div>
+                    <div class="box-stripe"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unboxing Timeline -->
+        <div class="observe-fade">
+            <h3 class="text-2xl font-bold text-center mb-12" style="color: var(--surface);">The Unboxing Journey</h3>
+
+            <div class="flex flex-col md:flex-row items-stretch justify-between gap-0 md:gap-4 relative">
+                <!-- Step 1 -->
+                <div class="timeline-item unboxing-step md:flex-1 md:relative pb-8 md:pb-0">
+                    <div class="timeline-line hidden md:block"></div>
+                    <div class="timeline-circle">1</div>
+                    <p class="text-xs font-semibold mt-3" style="color: var(--surface);">Package Arrives</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-item unboxing-step md:flex-1 md:relative pb-8 md:pb-0">
+                    <div class="timeline-line hidden md:block"></div>
+                    <div class="timeline-circle">2</div>
+                    <p class="text-xs font-semibold mt-3" style="color: var(--surface);">Open Box</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-item unboxing-step md:flex-1 md:relative pb-8 md:pb-0">
+                    <div class="timeline-line hidden md:block"></div>
+                    <div class="timeline-circle">3</div>
+                    <p class="text-xs font-semibold mt-3" style="color: var(--surface);">Reveal Interior</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-item unboxing-step md:flex-1 md:relative pb-8 md:pb-0">
+                    <div class="timeline-line hidden md:block"></div>
+                    <div class="timeline-circle">4</div>
+                    <p class="text-xs font-semibold mt-3" style="color: var(--surface);">Inspect Packs</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-item unboxing-step md:flex-1 md:relative">
+                    <div class="timeline-circle">5</div>
+                    <p class="text-xs font-semibold mt-3" style="color: var(--surface);">Access Content</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Box Details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20 observe-fade">
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-4" style="color: var(--surface);">Standard Box</h4>
+                <div class="space-y-3 text-sm text-gray-600">
+                    <p><strong>Dimensions:</strong> 12" × 8" × 4"</p>
+                    <p><strong>Capacity:</strong> 2-3 premium cuts</p>
+                    <p><strong>Interior:</strong> Burgundy with tissue wrapping</p>
+                    <p><strong>Insulation:</strong> Dry ice + custom padding</p>
+                </div>
+            </div>
+
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-4" style="color: var(--surface);">Premium Box</h4>
+                <div class="space-y-3 text-sm text-gray-600">
+                    <p><strong>Dimensions:</strong> 14" × 10" × 5"</p>
+                    <p><strong>Capacity:</strong> 4-5 premium selections</p>
+                    <p><strong>Interior:</strong> Burgundy silk lining</p>
+                    <p><strong>Extras:</strong> Handwritten note + recipe cards</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- BRAND WORLD SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">08</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center">Brand Architecture</h2>
+
+        <!-- Constellation -->
+        <div class="constellation observe-fade">
+            <div class="constellation-center">
+                <div>MEAT<br/>BOUTIQUE</div>
+            </div>
+
+            <!-- Quality -->
+            <div class="constellation-element" style="top: 10%; left: 5%;">
+                <div class="text-2xl">✓</div>
+                <span>Verified<br/>Quality</span>
+            </div>
+
+            <!-- Sourcing -->
+            <div class="constellation-element" style="top: 10%; right: 5%;">
+                <div class="text-2xl">◯</div>
+                <span>Global<br/>Sourcing</span>
+            </div>
+
+            <!-- Grading -->
+            <div class="constellation-element" style="top: 50%; left: 0%; transform: translateX(-100%);">
+                <div class="text-2xl">⚡</div>
+                <span>Scientific<br/>Grading</span>
+            </div>
+
+            <!-- Experience -->
+            <div class="constellation-element" style="top: 50%; right: 0%; transform: translateX(100%);">
+                <div class="text-2xl">✦</div>
+                <span>White-Glove<br/>Service</span>
+            </div>
+
+            <!-- Heritage -->
+            <div class="constellation-element" style="bottom: 10%; left: 5%;">
+                <div class="text-2xl">♣</div>
+                <span>Premium<br/>Heritage</span>
+            </div>
+
+            <!-- Trust -->
+            <div class="constellation-element" style="bottom: 10%; right: 5%;">
+                <div class="text-2xl">◆</div>
+                <span>Radical<br/>Transparency</span>
+            </div>
+        </div>
+
+        <!-- Design System -->
+        <div class="mt-20 observe-fade">
+            <h3 class="text-2xl font-bold text-center mb-12">Design System</h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-full h-24 rounded-8px mb-4 border-2" style="background-color: var(--black); border-color: var(--gold);"></div>
+                    <p class="text-xs font-semibold">Black<br/>#0A0A0A</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 rounded-8px mb-4 border-2" style="background-color: var(--gold); border-color: #999;"></div>
+                    <p class="text-xs font-semibold">Gold<br/>#C9A96E</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 rounded-8px mb-4 border-2" style="background-color: var(--burgundy); border-color: #999;"></div>
+                    <p class="text-xs font-semibold">Burgundy<br/>#6B2D4A</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-full h-24 rounded-8px mb-4 border-2" style="background-color: var(--light-canvas); border-color: #999;"></div>
+                    <p class="text-xs font-semibold">Light Canvas<br/>#FAF8F4</p>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <h4 class="font-bold mb-6 text-center">Typography</h4>
+                <div class="space-y-4">
+                    <div class="border-b pb-4" style="border-color: rgba(201, 169, 110, 0.3);">
+                        <p class="text-sm text-gray-400 mb-2">Playfair Display - Headlines</p>
+                        <p style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700;">The Meat Boutique</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400 mb-2">Montserrat - Body & UI</p>
+                        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px;">Premium sourcing, grading, and white-glove service for the world's most discerning palates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- CUSTOMER JOURNEY SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">09</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center" style="color: var(--surface);">Customer Journey</h2>
+
+        <div class="observe-fade overflow-x-auto">
+            <div class="flex items-center justify-between gap-4 md:gap-8 min-w-max md:min-w-full px-4 md:px-0">
+                <!-- Discover -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <path d="M30 12 L35 28 H52 L38 38 L43 54 L30 44 L17 54 L22 38 L8 28 H25 Z" />
+                    </svg>
+                </div>
+
+                <div class="journey-connector"></div>
+
+                <!-- Browse -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <rect x="15" y="15" width="30" height="30" rx="2" />
+                        <line x1="22" y1="22" x2="38" y2="22" />
+                        <line x1="22" y1="30" x2="38" y2="30" />
+                        <line x1="22" y1="38" x2="38" y2="38" />
+                    </svg>
+                </div>
+
+                <div class="journey-connector"></div>
+
+                <!-- Select -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <path d="M25 30 L32 38 L45 20" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="30" cy="30" r="18" />
+                    </svg>
+                </div>
+
+                <div class="journey-connector"></div>
+
+                <!-- Order -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <path d="M20 15 H45 Q48 15 48 18 V40 Q48 43 45 43 H15 Q12 43 12 40 V18 Q12 15 15 15" />
+                        <path d="M16 15 L20 8 L25 15" />
+                        <path d="M45 15 L41 8 L36 15" />
+                    </svg>
+                </div>
+
+                <div class="journey-connector"></div>
+
+                <!-- Receive -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <path d="M20 28 L30 38 L50 15" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M48 30 V45 Q48 48 45 48 H15 Q12 48 12 45 V20" />
+                    </svg>
+                </div>
+
+                <div class="journey-connector"></div>
+
+                <!-- Cook & Enjoy -->
+                <div class="journey-stop">
+                    <svg viewBox="0 0 60 60" fill="none" stroke="#C9A96E" stroke-width="1.5" class="w-8 h-8">
+                        <path d="M25 35 Q30 25 35 35" stroke-linecap="round" />
+                        <circle cx="22" cy="18" r="2" />
+                        <circle cx="38" cy="18" r="2" />
+                        <path d="M15 45 L45 45 Q48 45 48 48 L48 50 Q48 52 45 52 H15 Q12 52 12 50 V48 Q12 45 15 45" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-6 gap-8 observe-fade">
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Discover</h4>
+                <p class="text-xs text-gray-600">Learn about the brand and philosophy</p>
+            </div>
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Browse</h4>
+                <p class="text-xs text-gray-600">Explore product catalog with descriptions</p>
+            </div>
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Select</h4>
+                <p class="text-xs text-gray-600">Choose cuts, portions, and options</p>
+            </div>
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Order</h4>
+                <p class="text-xs text-gray-600">Complete purchase with full details</p>
+            </div>
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Receive</h4>
+                <p class="text-xs text-gray-600">Get white-glove delivery experience</p>
+            </div>
+            <div class="text-center">
+                <h4 class="font-semibold mb-2" style="color: var(--surface);">Enjoy</h4>
+                <p class="text-xs text-gray-600">Cook and share the premium experience</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- CHANNEL STRATEGY SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">10</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center">Channel Strategy</h2>
+
+        <div class="channel-hub observe-fade">
+            <div class="channel-center">
+                <span style="line-height: 1.4;">MEAT<br/>BOUTIQUE</span>
+            </div>
+
+            <!-- Phone/App -->
+            <div class="channel-spoke" style="transform: rotate(0deg) translateX(150px);"></div>
+            <div class="constellation-element" style="top: 50%; right: -20px; transform: translate(0, -50%);width: 90px;">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-6 h-6">
+                    <rect x="8" y="6" width="24" height="28" rx="2" />
+                    <circle cx="20" cy="30" r="2" />
+                </svg>
+                <span style="font-size: 10px;">Mobile App</span>
+            </div>
+
+            <!-- Website -->
+            <div class="channel-spoke" style="transform: rotate(60deg) translateX(150px);"></div>
+            <div class="constellation-element" style="top: 10%; right: 10%; width: 90px;">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-6 h-6">
+                    <rect x="8" y="8" width="24" height="20" rx="2" />
+                    <line x1="8" y1="12" x2="32" y2="12" />
+                </svg>
+                <span style="font-size: 10px;">Website</span>
+            </div>
+
+            <!-- Retail -->
+            <div class="channel-spoke" style="transform: rotate(120deg) translateX(150px);"></div>
+            <div class="constellation-element" style="top: 10%; left: 10%; width: 90px;">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-6 h-6">
+                    <path d="M10 30 L12 12 H28 L30 30" />
+                    <line x1="16" y1="12" x2="14" y2="30" />
+                    <line x1="20" y1="12" x2="20" y2="30" />
+                    <line x1="24" y1="12" x2="26" y2="30" />
+                </svg>
+                <span style="font-size: 10px;">Retail</span>
+            </div>
+
+            <!-- B2B/Restaurant -->
+            <div class="channel-spoke" style="transform: rotate(180deg) translateX(150px);"></div>
+            <div class="constellation-element" style="top: 50%; left: -20px; transform: translate(0, -50%); width: 90px;">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-6 h-6">
+                    <path d="M12 20 L20 28 L28 20" />
+                    <path d="M10 12 Q10 8 15 8 H25 Q30 8 30 12" />
+                </svg>
+                <span style="font-size: 10px;">B2B Chef</span>
+            </div>
+
+            <!-- Subscription -->
+            <div class="channel-spoke" style="transform: rotate(240deg) translateX(150px);"></div>
+            <div class="constellation-element" style="bottom: 10%; left: 10%; width: 90px;">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#C9A96E" stroke-width="1.2" class="w-6 h-6">
+                    <rect x="10" y="10" width="20" height="20" rx="2" />
+                    <line x1="10" y1="16" x2="30" y2="16" />
+                    <line x1="10" y1="22" x2="30" y2="22" />
+                </svg>
+                <span style="font-size: 10px;">Subscription</span>
+            </div>
+        </div>
+
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-12 observe-fade">
+            <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-3" style="color: var(--gold);">Direct-to-Consumer</h4>
+                <p class="text-sm text-gray-400">App + Website + Subscription for engaged customers seeking premium convenience</p>
+                <div class="mt-4 text-2xl font-bold" style="color: var(--gold);">60%</div>
+            </div>
+
+            <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-3" style="color: var(--gold);">Professional</h4>
+                <p class="text-sm text-gray-400">B2B Chef program for restaurants, boutique hotels, catering companies</p>
+                <div class="mt-4 text-2xl font-bold" style="color: var(--gold);">25%</div>
+            </div>
+
+            <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-3" style="color: var(--gold);">Retail</h4>
+                <p class="text-sm text-gray-400">Premium grocery, specialty butchers, and high-end food retailers</p>
+                <div class="mt-4 text-2xl font-bold" style="color: var(--gold);">15%</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- PLATFORM SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">11</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center" style="color: var(--surface);">Platform Architecture</h2>
+
+        <div class="max-w-2xl mx-auto observe-fade">
+            <!-- GFS Layer -->
+            <div class="platform-layer relative mb-8">
+                <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 mr-4">
+                    <path d="M5 15 L10 20 L25 5" stroke="#C9A96E" />
+                </svg>
+                <span style="color: var(--surface);">Global Food Supply</span>
+                <p class="text-xs text-gray-600 ml-10">Sourcing partnerships, logistics, global reach</p>
+                <div class="layer-arrow hidden md:block">↓</div>
+            </div>
+
+            <!-- Prime Lab Layer -->
+            <div class="platform-layer relative mb-8">
+                <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 mr-4">
+                    <circle cx="15" cy="15" r="10" stroke="#C9A96E" />
+                    <path d="M15 8 L18 15 L11 15 Z" stroke="#C9A96E" />
+                </svg>
+                <span style="color: var(--surface);">Prime Lab Grading</span>
+                <p class="text-xs text-gray-600 ml-10">Scientific grading, quality verification, consistency</p>
+                <div class="layer-arrow hidden md:block">↓</div>
+            </div>
+
+            <!-- Meat Boutique Layer -->
+            <div class="platform-layer relative" style="border-color: var(--burgundy); background: linear-gradient(135deg, rgba(107, 45, 74, 0.2), rgba(107, 45, 74, 0.1));">
+                <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 mr-4">
+                    <path d="M15 5 L25 15 L15 25 L5 15 Z" stroke="#C9A96E" />
+                </svg>
+                <span style="color: var(--surface);">Meat Boutique Brand</span>
+                <p class="text-xs text-gray-600 ml-10">Customer experience, subscription service, brand narrative</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- GROWTH & SCALE SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">12</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center">Growth Roadmap</h2>
+
+        <div class="observe-fade">
+            <h3 class="text-xl font-bold text-center mb-12" style="color: var(--gold);">EXPANSION MILESTONES</h3>
+
+            <div class="flex flex-col md:flex-row items-stretch justify-between gap-8">
+                <!-- Year 1 -->
+                <div class="growth-milestone">
+                    <div class="milestone-circle">
+                        <span>Y1</span>
+                    </div>
+                    <h4 class="font-semibold mb-2">Foundation</h4>
+                    <p class="text-xs text-gray-400">Launch DTC, establish brand, perfect operations</p>
+                    <div class="text-xs text-gray-500 mt-2">Q1-Q4 2026</div>
+                </div>
+
+                <!-- Year 2 -->
+                <div class="growth-milestone">
+                    <div class="milestone-circle">
+                        <span>Y2</span>
+                    </div>
+                    <h4 class="font-semibold mb-2">Growth</h4>
+                    <p class="text-xs text-gray-400">B2B expansion, retail partnerships, geographic reach</p>
+                    <div class="text-xs text-gray-500 mt-2">2027</div>
+                </div>
+
+                <!-- Year 3 -->
+                <div class="growth-milestone">
+                    <div class="milestone-circle">
+                        <span>Y3</span>
+                    </div>
+                    <h4 class="font-semibold mb-2">Scale</h4>
+                    <p class="text-xs text-gray-400">Multi-region operations, licensing opportunities</p>
+                    <div class="text-xs text-gray-500 mt-2">2028</div>
+                </div>
+
+                <!-- Year 4+ -->
+                <div class="growth-milestone">
+                    <div class="milestone-circle">
+                        <span>4+</span>
+                    </div>
+                    <h4 class="font-semibold mb-2">Dominance</h4>
+                    <p class="text-xs text-gray-400">Global premium meat brand, category leader</p>
+                    <div class="text-xs text-gray-500 mt-2">2029+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 observe-fade">
+            <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-4" style="color: var(--gold);">Geographic Expansion</h4>
+                <div class="space-y-3 text-sm text-gray-400">
+                    <p>North America Foundation (2026)</p>
+                    <p>Europe Gateway (2027)</p>
+                    <p>Asia-Pacific Entry (2028)</p>
+                    <p>Global Presence (2029+)</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(26, 26, 26, 0.8); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 8px; padding: 24px;">
+                <h4 class="font-bold mb-4" style="color: var(--gold);">Product Expansion</h4>
+                <div class="space-y-3 text-sm text-gray-400">
+                    <p>Core Beef (Year 1)</p>
+                    <p>Premium Lamb & Pork (Year 2)</p>
+                    <p>Prepared Meals & Extras (Year 3)</p>
+                    <p>Complete Culinary Ecosystem (Year 4+)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- BUSINESS LOGIC SECTION -->
+<section class="py-24 px-6 relative" style="background-color: var(--light-canvas);">
+    <div class="section-number">13</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center" style="color: var(--surface);">Business Model</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 observe-fade">
+            <!-- COGS -->
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 24px; text-align: center;">
+                <div class="metric-gauge">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-inner" style="color: var(--surface);">32%</div>
+                </div>
+                <h4 class="font-bold mt-6 mb-2" style="color: var(--surface);">COGS</h4>
+                <p class="text-xs text-gray-600">Sourcing & grading costs</p>
+            </div>
+
+            <!-- Fulfillment -->
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 24px; text-align: center;">
+                <div class="metric-gauge">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-inner" style="color: var(--surface);">18%</div>
+                </div>
+                <h4 class="font-bold mt-6 mb-2" style="color: var(--surface);">Logistics</h4>
+                <p class="text-xs text-gray-600">White-glove delivery</p>
+            </div>
+
+            <!-- Operations -->
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 24px; text-align: center;">
+                <div class="metric-gauge">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-inner" style="color: var(--surface);">25%</div>
+                </div>
+                <h4 class="font-bold mt-6 mb-2" style="color: var(--surface);">Operations</h4>
+                <p class="text-xs text-gray-600">Tech, support, fulfillment</p>
+            </div>
+
+            <!-- Margin -->
+            <div style="background: white; border: 2px solid var(--gold); border-radius: 8px; padding: 24px; text-align: center;">
+                <div class="metric-gauge">
+                    <div class="gauge-bg"></div>
+                    <div class="gauge-inner" style="color: var(--gold);">25%</div>
+                </div>
+                <h4 class="font-bold mt-6 mb-2" style="color: var(--gold);">Gross Margin</h4>
+                <p class="text-xs text-gray-600">Contribution to growth</p>
+            </div>
+        </div>
+
+        <div class="mt-20 observe-fade" style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 32px;">
+            <h4 class="font-bold text-center mb-12" style="color: var(--surface);">Unit Economics (Year 1)</h4>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center pb-4" style="border-bottom: 1px solid #eee;">
+                    <span style="color: var(--surface);">Average Order Value</span>
+                    <span class="font-bold" style="color: var(--gold);">$180</span>
+                </div>
+                <div class="flex justify-between items-center pb-4" style="border-bottom: 1px solid #eee;">
+                    <span style="color: var(--surface);">COGS per Order</span>
+                    <span class="font-bold" style="color: var(--surface);">($58)</span>
+                </div>
+                <div class="flex justify-between items-center pb-4" style="border-bottom: 1px solid #eee;">
+                    <span style="color: var(--surface);">Fulfillment Cost</span>
+                    <span class="font-bold" style="color: var(--surface);">($32)</span>
+                </div>
+                <div class="flex justify-between items-center pb-4" style="border-bottom: 2px solid var(--gold);">
+                    <span style="color: var(--surface);">Contribution Margin</span>
+                    <span class="font-bold" style="color: var(--gold);">$90 (50%)</span>
+                </div>
+                <div class="flex justify-between items-center pt-4">
+                    <span style="color: var(--surface);">After Operating Costs</span>
+                    <span class="font-bold" style="color: var(--gold);">$35 (19%)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- KEY DECISIONS SECTION -->
+<section class="bg-black py-24 px-6 relative" style="background-color: #0A0A0A;">
+    <div class="section-number">14</div>
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-5xl md:text-6xl font-bold mb-20 text-center">Key Decisions</h2>
+
+        <div class="space-y-12">
+            <!-- Decision 1 -->
+            <div class="decision-card observe-fade">
+                <div class="text-center">
+                    <div style="width: 50px; height: 50px; background: var(--burgundy); border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">1</div>
+                </div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Quality First</h4>
+                    <p class="text-xs text-gray-400">Premium positioning, not volume</p>
+                </div>
+                <div style="color: var(--gold); font-size: 20px; font-weight: 700;">VS</div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">High Volume</h4>
+                    <p class="text-xs text-gray-400">Low margins, mass market approach</p>
+                </div>
+            </div>
+
+            <!-- Decision 2 -->
+            <div class="decision-card observe-fade">
+                <div class="text-center">
+                    <div style="width: 50px; height: 50px; background: var(--burgundy); border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">2</div>
+                </div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">DTC-First</h4>
+                    <p class="text-xs text-gray-400">Control brand, customer relationship</p>
+                </div>
+                <div style="color: var(--gold); font-size: 20px; font-weight: 700;">VS</div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Wholesale Focus</h4>
+                    <p class="text-xs text-gray-400">Broader reach, lower control</p>
+                </div>
+            </div>
+
+            <!-- Decision 3 -->
+            <div class="decision-card observe-fade">
+                <div class="text-center">
+                    <div style="width: 50px; height: 50px; background: var(--burgundy); border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">3</div>
+                </div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Partnership Model</h4>
+                    <p class="text-xs text-gray-400">Leverage GFS + Prime Lab expertise</p>
+                </div>
+                <div style="color: var(--gold); font-size: 20px; font-weight: 700;">VS</div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Vertical Integration</h4>
+                    <p class="text-xs text-gray-400">Own every step, higher capital</p>
+                </div>
+            </div>
+
+            <!-- Decision 4 -->
+            <div class="decision-card observe-fade">
+                <div class="text-center">
+                    <div style="width: 50px; height: 50px; background: var(--burgundy); border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">4</div>
+                </div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Premium Pricing</h4>
+                    <p class="text-xs text-gray-400">Reflect quality, sustainable margins</p>
+                </div>
+                <div style="color: var(--gold); font-size: 20px; font-weight: 700;">VS</div>
+                <div class="text-center">
+                    <h4 class="font-bold mb-2" style="color: white;">Competitive Pricing</h4>
+                    <p class="text-xs text-gray-400">Undercut market, volume dependent</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GOLD LINE SEPARATOR -->
+<div class="w-full h-px gold-line"></div>
+
+<!-- FOOTER -->
+<footer class="bg-black relative overflow-hidden" style="background-color: #0A0A0A;">
+    <div class="absolute inset-0 marble-texture opacity-5 pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
+        <div class="text-center border-b pb-12" style="border-color: var(--gold); opacity: 0.3;">
+            <h2 class="text-5xl md:text-6xl font-bold mb-4" style="color: var(--gold); font-family: 'Playfair Display', serif;">
+                MEAT BOUTIQUE
+            </h2>
+            <p class="text-gray-400 text-sm">Premium sourcing, grading, and white-glove service</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div>
+                <h4 class="font-semibold mb-2 text-sm" style="color: var(--gold);">SOURCING</h4>
+                <p class="text-xs text-gray-500">Built on Global Food Supply partnerships</p>
+            </div>
+            <div class="border-l border-r" style="border-color: var(--gold); opacity: 0.3;">
+                <h4 class="font-semibold mb-2 text-sm" style="color: var(--gold);">GRADING</h4>
+                <p class="text-xs text-gray-500">Verified by Prime Lab science</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-2 text-sm" style="color: var(--gold);">SERVICE</h4>
+                <p class="text-xs text-gray-500">Delivered with premium care</p>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-12 text-center border-t" style="border-color: var(--gold); opacity: 0.2;">
+            <p class="text-xs text-gray-500">© 2026 Meat Boutique. All rights reserved.</p>
+            <p class="text-xs text-gray-600 mt-4" style="color: var(--gold); opacity: 0.6;">Redefining premium meat for the discerning palate</p>
+        </div>
+    </div>
+</footer>
+
+<!-- INTERSECTION OBSERVER SCRIPT -->
+<script>
+    // Counter animation
+    function animateCounter(element) {
+        const target = parseInt(element.dataset.target);
+        let current = 0;
+        const increment = Math.ceil(target / 50);
+        const interval = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(interval);
+            }
+            element.textContent = current.toLocaleString();
+        }, 30);
+    }
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+
+                // Animate counters when they come into view
+                if (entry.target.classList.contains('counter')) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe all fade elements
+    document.querySelectorAll('.observe-fade').forEach(el => observer.observe(el));
+    document.querySelectorAll('.counter').forEach(el => observer.observe(el));
+
+    // Unboxing step activation on scroll
+    const unboxingSteps = document.querySelectorAll('.unboxing-step');
+    const unboxingObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                unboxingSteps.forEach(step => step.classList.remove('active'));
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    unboxingSteps.forEach(step => unboxingObserver.observe(step));
+
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+</script>
+
+</body>
+</html>
+        }
+
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .montserrat {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--accent-gold);
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted-dark);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: var(--primary-black);
+                padding: 2rem;
+                list-style: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+            }
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Bounce Arrow */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bounce-arrow {
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        .dark-section {
+            background: var(--primary-black);
+            color: var(--text-light);
+        }
+
+        .light-section {
+            background: var(--light-canvas);
+            color: var(--text-dark);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-max {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .heading-gold {
+            color: var(--accent-gold);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
+        }
+
+        .light-section .heading-gold {
+            color: var(--text-dark);
+        }
+
+        /* Cards */
+        .card-dark {
+            background: var(--card-dark);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .card-light {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .gold-border-left {
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .gold-border-top {
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 100%);
+            position: relative;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .hero-text {
+            margin-bottom: 3rem;
+        }
+
+        .hero-word {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: 0.2em;
+            line-height: 1.1;
+        }
+
+        .hero-word-white {
+            color: var(--text-light);
+        }
+
+        .hero-word-gold {
+            color: var(--accent-gold);
+        }
+
+        .hero-divider {
+            width: 40px;
+            height: 3px;
+            background: var(--accent-gold);
+            margin: 1rem auto;
+        }
+
+        .hero-tagline {
+            color: var(--accent-gold);
+            font-size: 1.125rem;
+            margin: 1.5rem 0 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-subtagline {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-button {
+            background: var(--accent-gold);
+            color: var(--primary-black);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-button:hover {
+            background: #dab47a;
+            transform: translateY(-2px);
+        }
+
+        .hero-confidential {
+            color: var(--muted-dark);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+        }
+
+        .hero-bottom-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .hero-arrow {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        /* Icon Placeholder */
+        .icon-placeholder {
+            width: 50px;
+            height: 50px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Bag Mockup */
+        .bag-mockup {
+            width: 200px;
+            height: 280px;
+            background: linear-gradient(180deg,
+                var(--primary-black) 0%,
+                var(--primary-black) 22%,
+                var(--cream) 22%,
+                var(--cream) 78%,
+                var(--primary-black) 78%,
+                var(--primary-black) 100%);
+            position: relative;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .bag-top-band {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 22%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .bag-window-zone {
+            position: absolute;
+            top: 22%;
+            left: 0;
+            right: 0;
+            height: 56%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.5;
+        }
+
+        .bag-bottom-band {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 22%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .bag-reserve-tab {
+            position: absolute;
+            top: 15%;
+            right: -8px;
+            background: var(--burgundy);
+            color: var(--text-light);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-radius: 2px;
+        }
+
+        /* Box Mockup */
+        .box-mockup {
+            width: 240px;
+            height: 200px;
+            background: var(--primary-black);
+            position: relative;
+            margin: 2rem auto;
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .box-top {
+            flex: 2;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-black);
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .box-middle {
+            flex: 1;
+            width: 100%;
+            background: var(--burgundy);
+        }
+
+        .box-bottom {
+            flex: 1;
+            width: 100%;
+            background: var(--primary-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: var(--card-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent-gold);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .product-description {
+            color: var(--muted-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-button {
+            width: 100%;
+            background: var(--primary-black);
+            color: var(--accent-gold);
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-button:hover {
+            background: var(--accent-gold);
+            color: var(--primary-black);
+        }
+
+        /* Journey Step */
+        .journey-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .journey-number {
+            width: 50px;
+            height: 50px;
+            background: var(--card-dark);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+        }
+
+        .journey-title {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .journey-description {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        .journey-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 1px;
+            height: 40px;
+            background: rgba(201, 169, 110, 0.3);
+        }
+
+        /* Decision Card */
+        .decision-card {
+            background: var(--card-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .decision-number {
+            color: var(--accent-gold);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .decision-question {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .decision-context {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        /* Brand Element */
+        .brand-element {
+            background: var(--card-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .brand-label {
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .brand-content {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Growth Vector */
+        .growth-vector {
+            background: var(--card-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .growth-title {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .growth-stages {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+            line-height: 1.8;
+        }
+
+        .growth-stages strong {
+            color: var(--text-light);
+        }
+
+        /* Metric Block */
+        .metric-block {
+            background: var(--card-dark);
+            padding: 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .metric-label {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-black);
+            border-top: 1px solid var(--burgundy);
+            padding: 3rem 2rem;
+            color: var(--muted-dark);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+        }
+
+        .footer-info {
+            font-size: 0.875rem;
+            color: var(--muted-dark);
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .text-gray { color: var(--muted-dark); }
+        .text-gold { color: var(--accent-gold); }
+
+        /* Trust Bar Icons */
+        .trust-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Pillar Card */
+        .pillar-card {
+            background: var(--card-dark);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-top: 3px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        .pillar-title {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .pillar-description {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Channel Card */
+        .channel-card {
+            background: var(--card-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        .channel-title {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .channel-description {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        .feature-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Quote */
+        .quote-block {
+            border-left: 3px solid var(--burgundy);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--muted-dark);
+        }
+
+        .quote-block em {
+            color: var(--accent-gold);
+        }
+
+        /* Unboxing Timeline */
+        .unboxing-item {
+            background: var(--card-dark);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .unboxing-step {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .unboxing-description {
+            color: var(--muted-dark);
+            font-size: 0.875rem;
+        }
+
+        /* Packaging Details */
+        .packaging-detail {
+            background: rgba(201, 169, 110, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 4px;
+        }
+
+        .packaging-detail-title {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+        }
+
+        .packaging-detail-text {
+            color: var(--muted-dark);
+            font-size: 0.85rem;
+        }
+
+        /* Problem Icons */
+        .problem-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-section .problem-icon {
+            background: rgba(10, 10, 10, 0.05);
+        }
+
+        /* Large Platform Cards */
+        .platform-card {
+            background: var(--card-dark);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            margin-bottom: 2rem;
+        }
+
+        .platform-title {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .platform-description {
+            color: var(--muted-dark);
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .heading-gold {
+                font-size: 1.75rem;
+            }
+
+            .hero {
+                padding: 5rem 1.5rem;
+            }
+
+            .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">MEAT BOUTIQUE</div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#thesis">Thesis</a></li>
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#packaging">Packaging</a></li>
+                <li><a href="#brand">Brand</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero dark-section" id="hero">
+        <div class="hero-text fade-in">
+            <div class="hero-word hero-word-white">MEAT</div>
+            <div class="hero-divider"></div>
+            <div class="hero-word hero-word-gold">BOUTIQUE</div>
+        </div>
+
+        <p class="hero-tagline fade-in">Premium Frozen Beef & Lamb. Redefined.</p>
+        <p class="hero-subtagline fade-in">Certainty in every cut.</p>
+
+        <button class="hero-button fade-in">EXPLORE</button>
+
+        <p class="hero-confidential fade-in">A Board Presentation — Confidential</p>
+
+        <div class="bounce-arrow fade-in hero-arrow">↓</div>
+
+        <div class="hero-bottom-border"></div>
+    </section>
+
+    <!-- 2. TRUST BAR -->
+    <section class="dark-section" style="background: var(--primary-black); border-top: 1px solid var(--accent-gold); border-bottom: 1px solid var(--accent-gold); padding: 3rem 2rem;">
+        <div class="section-max">
+            <div class="grid-4">
+                <div class="fade-in" style="text-align: center;">
+                    <div class="trust-icon">❄️</div>
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Flash-Frozen</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Locked at peak quality</div>
+                </div>
+                <div class="fade-in" style="text-align: center;">
+                    <div class="trust-icon">✓</div>
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">No Additives</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">100% pure protein</div>
+                </div>
+                <div class="fade-in" style="text-align: center;">
+                    <div class="trust-icon">🔗</div>
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Traceable Origin</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Farm to table transparency</div>
+                </div>
+                <div class="fade-in" style="text-align: center;">
+                    <div class="trust-icon">⭐</div>
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Premium Graded</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">USDA Prime + hand-selected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE THESIS -->
+    <section class="dark-section section" id="thesis">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">A Category That Doesn't Exist Yet</h2>
+
+            <p class="mb-4 fade-in" style="color: var(--muted-dark); max-width: 700px; line-height: 1.8;">
+                There exists a vast empty space in the Lebanese consumer market: between premium fresh meat at specialized butchers and low-quality commodity frozen. Quality-conscious households want premium protein that's convenient, consistently excellent, and trustworthy—but no one is offering that combination. This is the thesis: a premium frozen protein service platform built for modern Lebanese life.
+            </p>
+
+            <div class="grid-3">
+                <div class="card-dark fade-in">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Premium frozen brands<br>in Lebanon</div>
+                </div>
+                <div class="card-dark fade-in">
+                    <div class="stat-number">$XXM</div>
+                    <div class="stat-label">Frozen meat market<br>opportunity</div>
+                </div>
+                <div class="card-dark fade-in">
+                    <div class="stat-number">73%</div>
+                    <div class="stat-label">Consumers distrust<br>frozen quality</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. THE PROBLEM -->
+    <section class="light-section section" id="problem">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">What's Broken in the Market</h2>
+
+            <div class="grid-2">
+                <div class="card-dark fade-in">
+                    <div class="problem-icon">❌</div>
+                    <div class="text-gold" style="font-weight: 600; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif;">No Trust in Frozen</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Consumers reflexively associate frozen protein with low quality, old stock, and disappointing thaw results. Premium frozen doesn't compute in their mental model.</div>
+                </div>
+
+                <div class="card-dark fade-in">
+                    <div class="problem-icon">📊</div>
+                    <div class="text-gold" style="font-weight: 600; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif;">Inconsistent Quality</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Every supermarket purchase is a gamble. Color, thickness, marbling, and freshness vary wildly between packages. No grading system, no assurance.</div>
+                </div>
+
+                <div class="card-dark fade-in">
+                    <div class="problem-icon">📦</div>
+                    <div class="text-gold" style="font-weight: 600; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif;">Zero Portioning Intelligence</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Bulk cuts at supermarkets don't match household needs. Families buy oversized packs, waste meat, or can't properly portion for special dinners.</div>
+                </div>
+
+                <div class="card-dark fade-in">
+                    <div class="problem-icon">🛎️</div>
+                    <div class="text-gold" style="font-weight: 600; margin-bottom: 0.75rem; font-family: 'Playfair Display', serif;">No Premium Service Layer</div>
+                    <div style="color: var(--muted-dark); font-size: 0.875rem;">Frozen meat is a commodity grab at supermarkets. No delivery experience, no customer education, no guided cooking, no brand relationship.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. THE SOLUTION -->
+    <section class="dark-section section" id="solution">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">Not a Butcher. Not a Supermarket Brand.<br>A New Category.</h2>
+
+            <p class="mb-4 fade-in" style="color: var(--muted-dark); max-width: 800px; line-height: 1.8;">
+                Meat Boutique is a premium frozen protein service platform. We source globally (via GFS), partner with Prime Lab for precision processing, and present the result through premium brand packaging and a curated service experience. We're not competing as a cheaper butcher or a "premium frozen" supermarket item. We're creating an entirely new category: the premium frozen protein concierge.
+            </p>
+
+            <div class="grid-3">
+                <div class="pillar-card fade-in">
+                    <div class="pillar-title">Curated Quality</div>
+                    <div class="pillar-description">
+                        Sourced from verified premium suppliers, graded to strict USDA Prime standards, and portioned with surgical precision. Every cut is audited before packaging.
+                    </div>
+                </div>
+
+                <div class="pillar-card fade-in">
+                    <div class="pillar-title">Premium Convenience</div>
+                    <div class="pillar-description">
+                        Ready when you are. Flash-frozen at peak flavor, delivered to your door on your schedule. No trip to the butcher, no compromise on quality.
+                    </div>
+                </div>
+
+                <div class="pillar-card fade-in">
+                    <div class="pillar-title">Trust by Design</div>
+                    <div class="pillar-description">
+                        Transparent packaging shows every cut. Consistent appearance, flavor, and experience. You know exactly what you're getting, every time.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PRODUCT UNIVERSE -->
+    <section class="light-section section" id="products">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">The Product Universe</h2>
+
+            <div class="grid-3">
+                <div class="product-card fade-in">
+                    <div class="product-image">🥩</div>
+                    <div class="product-info">
+                        <div class="product-title">Premium Cuts</div>
+                        <div class="product-description">Ribeye, tenderloin, striploin, lamb rack—hand-selected for marbling and color.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-image">📦</div>
+                    <div class="product-info">
+                        <div class="product-title">Portioned Packs</div>
+                        <div class="product-description">Family, couple, single portions. Perfect sizing for your household, zero waste.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-image">🔥</div>
+                    <div class="product-info">
+                        <div class="product-title">Grill Collections</div>
+                        <div class="product-description">Curated BBQ and hosting boxes. Everything you need for the perfect summer meal.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-image">🏠</div>
+                    <div class="product-info">
+                        <div class="product-title">Household Essentials</div>
+                        <div class="product-description">Ground beef, stew cuts, everyday staples. Premium quality, convenient portions.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-image">🧂</div>
+                    <div class="product-info">
+                        <div class="product-title">Spice Rubs & Marinades</div>
+                        <div class="product-description">Chef-collaboration seasonings. Elevate your meal with curated flavor profiles.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-image">💎</div>
+                    <div class="product-info">
+                        <div class="product-title">Curated Boxes</div>
+                        <div class="product-description">Weekly, monthly, occasion-based collections. Curation done for you.</div>
+                        <button class="product-button">EXPLORE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. PACKAGING SYSTEM -->
+    <section class="dark-section section" id="packaging">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">Engineered for Trust</h2>
+            <p style="color: var(--accent-gold); margin-bottom: 3rem; font-style: italic; fade-in">Direction B — Bold Modern Premium</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; margin-bottom: 4rem; align-items: start;">
+                <div class="fade-in">
+                    <div class="bag-mockup">
+                        <div class="bag-top-band">MEAT BOUTIQUE</div>
+                        <div class="bag-window-zone">🥩</div>
+                        <div class="bag-bottom-band">RIBEYE • 250G</div>
+                        <div class="bag-reserve-tab">RESERVE</div>
+                    </div>
+                    <p style="text-align: center; color: var(--muted-dark); font-size: 0.85rem; margin-top: 1rem;">Front: 22% / 56% / 22% Proportions</p>
+                </div>
+
+                <div class="fade-in">
+                    <div class="packaging-detail">
+                        <div class="packaging-detail-title">Top Band (22%)</div>
+                        <div class="packaging-detail-text">Black background, centered gold "MEAT BOUTIQUE" wordmark, premium serif typography. Announces the brand unmistakably.</div>
+                    </div>
+
+                    <div class="packaging-detail">
+                        <div class="packaging-detail-title">Window Zone (56%)</div>
+                        <div class="packaging-detail-text">Transparent window, cream background, shows the cut clearly. This is the hero zone. No tricks, no misleading photography—the meat speaks for itself.</div>
+                    </div>
+
+                    <div class="packaging-detail">
+                        <div class="packaging-detail-title">Bottom Band (22%)</div>
+                        <div class="packaging-detail-text">Black background, gold text showing cut name, weight, and freeze date. All critical information at a glance.</div>
+                    </div>
+
+                    <div class="packaging-detail">
+                        <div class="packaging-detail-title">Reserve Seal</div>
+                        <div class="packaging-detail-text">Burgundy tab on top-right of window. Hand-selected premium cuts get the Reserve badge. Clear visual hierarchy.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--accent-gold); font-size: 1.25rem; margin-bottom: 2rem; font-family: 'Playfair Display', serif;">Bag Sizing System</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
+                <div class="fade-in" style="text-align: center; background: rgba(201, 169, 110, 0.05); padding: 1.5rem; border-radius: 8px;">
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Small</div>
+                    <div style="color: var(--muted-dark); font-size: 0.85rem;">100-150G<br>Single portions</div>
+                </div>
+                <div class="fade-in" style="text-align: center; background: rgba(201, 169, 110, 0.05); padding: 1.5rem; border-radius: 8px;">
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Medium</div>
+                    <div style="color: var(--muted-dark); font-size: 0.85rem;">200-250G<br>Couple meals</div>
+                </div>
+                <div class="fade-in" style="text-align: center; background: rgba(201, 169, 110, 0.05); padding: 1.5rem; border-radius: 8px;">
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Large</div>
+                    <div style="color: var(--muted-dark); font-size: 0.85rem;">400-500G<br>Family meals</div>
+                </div>
+                <div class="fade-in" style="text-align: center; background: rgba(201, 169, 110, 0.05); padding: 1.5rem; border-radius: 8px;">
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">XL</div>
+                    <div style="color: var(--muted-dark); font-size: 0.85rem;">1-1.5KG<br>Hosting</div>
+                </div>
+                <div class="fade-in" style="text-align: center; background: rgba(201, 169, 110, 0.05); padding: 1.5rem; border-radius: 8px;">
+                    <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">HORECA</div>
+                    <div style="color: var(--muted-dark); font-size: 0.85rem;">5KG+<br>Professional</div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--accent-gold); font-size: 1.25rem; margin-bottom: 2rem; font-family: 'Playfair Display', serif;">System Features</h3>
+
+            <ul class="feature-list fade-in">
+                <li><strong>Vacuum-sealed bags</strong> with premium plastic and label integration</li>
+                <li><strong>QR code</strong> on every pack linking to cooking guides and sourcing transparency</li>
+                <li><strong>Bilingual labeling</strong> (Arabic + English) with full nutritional and storage information</li>
+                <li><strong>Reserve badges</strong> for premium-graded cuts, creating product hierarchy</li>
+                <li><strong>Minimal design aesthetic</strong> that feels boutique, not industrial</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 8. THE BOX EXPERIENCE -->
+    <section class="dark-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">The Unboxing Moment</h2>
+            <p style="color: var(--accent-gold); margin-bottom: 3rem; font-style: italic; fade-in">
+                <em>"The box is our first handshake with the customer. It says: we're not a supermarket commodity. We're a service."</em>
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; margin-bottom: 4rem; align-items: start;">
+                <div class="fade-in">
+                    <h3 style="color: var(--accent-gold); font-size: 1.1rem; margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">Box Types</h3>
+
+                    <div class="card-dark" style="margin-bottom: 1rem;">
+                        <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Signature Box</div>
+                        <div style="color: var(--muted-dark); font-size: 0.85rem;">Rigid, magnetic closure. $4-7 per unit. First orders, gifting, premium deliveries.</div>
+                    </div>
+
+                    <div class="card-dark" style="margin-bottom: 1rem;">
+                        <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Service Box</div>
+                        <div style="color: var(--muted-dark); font-size: 0.85rem;">Corrugated, tuck-lock closure. $1.50-2.50 per unit. Weekly recurring subscriptions.</div>
+                    </div>
+
+                    <div class="card-dark">
+                        <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">Grill Season Box</div>
+                        <div style="color: var(--muted-dark); font-size: 0.85rem;">Rigid, magnetic closure. $5-8 per unit. Summer/BBQ season, special collections.</div>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <div class="box-mockup">
+                        <div class="box-top">MEAT BOUTIQUE</div>
+                        <div class="box-middle"></div>
+                        <div class="box-bottom"></div>
+                    </div>
+                    <p style="text-align: center; color: var(--muted-dark); font-size: 0.85rem; margin-top: 1rem;">Matte black with gold foil. Magnetic closure with 1.5-second reveal.</p>
+                </div>
+            </div>
+
+            <h3 style="color: var(--accent-gold); font-size: 1.1rem; margin-bottom: 2rem; font-family: 'Playfair Display', serif;">5-Step Unboxing Sequence</h3>
+
+            <div class="grid-2">
+                <div class="unboxing-item fade-in">
+                    <div class="unboxing-step">1. First Sight</div>
+                    <div class="unboxing-description">Matte black exterior, gold foil "MEAT BOUTIQUE" wordmark, burgundy stripe at lower third. Box feels heavy and intentional in hands. First impression: premium.</div>
+                </div>
+
+                <div class="unboxing-item fade-in">
+                    <div class="unboxing-step">2. Magnetic Release</div>
+                    <div class="unboxing-description">Subtle, controlled resistance from magnets. 1.5-second reveal feels deliberate and crafted, not jarring. Sets a premium, careful tone.</div>
+                </div>
+
+                <div class="unboxing-item fade-in">
+                    <div class="unboxing-step">3. Interior Reveal</div>
+                    <div class="unboxing-description">Deep burgundy lining. Gold foil welcome card. Complimentary rub sachet on top. Everything signal premium, curated experience.</div>
+                </div>
+
+                <div class="unboxing-item fade-in">
+                    <div class="unboxing-step">4. Product Layer</div>
+                    <div class="unboxing-description">4-6 vacuum bags arranged face-up so gold branding is immediately visible. Dry ice underlay keeps everything frozen. Clean, organized presentation.</div>
+                </div>
+
+                <div class="unboxing-item fade-in">
+                    <div class="unboxing-step">5. Discovery Layer</div>
+                    <div class="unboxing-description">Thawing guide, QR code card linking to education hub and guided cooking. Rub application tips. Encourages engagement beyond the purchase.</div>
+                </div>
+            </div>
+
+            <div class="quote-block fade-in" style="margin-top: 3rem;">
+                Every element of the unboxing—the weight, the magnetic resistance, the interior reveal, the arrangement of products—tells the customer: <em>"This is not a supermarket impulse buy. This is a curated service built with care."</em>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. BRAND WORLD -->
+    <section class="dark-section section" id="brand">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">The Brand</h2>
+            <p style="color: var(--accent-gold); font-size: 1.125rem; margin-bottom: 3rem; font-family: 'Playfair Display', serif; fade-in">Certainty in every cut.</p>
+
+            <div class="grid-2">
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Positioning</div>
+                    <div class="brand-content">
+                        The premium frozen protein service for modern Lebanese households. We deliver curated quality, perfect portions, and a premium unboxing experience. Not a commodity. A service.
+                    </div>
+                </div>
+
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Personality</div>
+                    <div class="brand-content">
+                        Confident. Refined. Approachable. Never pretentious. We speak to quality-conscious households with respect for their time and intelligence. We're helpful, not sanctimonious.
+                    </div>
+                </div>
+
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Audience</div>
+                    <div class="brand-content">
+                        Quality-conscious households earning LBP 150M+. Hosting enthusiasts. Busy professionals who value convenience without compromise. Age 28-55, urban, digitally native, quality-focused.
+                    </div>
+                </div>
+
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Promise</div>
+                    <div class="brand-content">
+                        Premium quality, perfect portions, delivered with care—every single time. No variance, no surprises, no disappointments. Consistency is our brand promise.
+                    </div>
+                </div>
+
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Difference</div>
+                    <div class="brand-content">
+                        We don't sell frozen meat. We deliver a protein service: premium sourcing + precision portioning + premium packaging + brand experience + customer education.
+                    </div>
+                </div>
+
+                <div class="brand-element fade-in">
+                    <div class="brand-label">Visual Language</div>
+                    <div class="brand-content">
+                        Gold-on-black primary. Black-on-cream secondary. Burgundy accents. Playfair Display serif for heritage, Montserrat sans-serif for clarity. Minimal, confident, premium.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CUSTOMER JOURNEY -->
+    <section class="light-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">From Screen to Sizzle</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="journey-step fade-in">
+                    <div class="journey-number">1</div>
+                    <div class="journey-title">Discover</div>
+                    <div class="journey-description">Social, word-of-mouth, app marketplaces</div>
+                    <div class="journey-line"></div>
+                </div>
+
+                <div class="journey-step fade-in">
+                    <div class="journey-number">2</div>
+                    <div class="journey-title">Browse</div>
+                    <div class="journey-description">Curated categories, smart filters, box builder</div>
+                    <div class="journey-line"></div>
+                </div>
+
+                <div class="journey-step fade-in">
+                    <div class="journey-number">3</div>
+                    <div class="journey-title">Select</div>
+                    <div class="journey-description">Choose cuts, portions, boxes, add rubs</div>
+                    <div class="journey-line"></div>
+                </div>
+
+                <div class="journey-step fade-in">
+                    <div class="journey-number">4</div>
+                    <div class="journey-title">Receive</div>
+                    <div class="journey-description">Premium box, temperature-controlled delivery</div>
+                    <div class="journey-line"></div>
+                </div>
+
+                <div class="journey-step fade-in">
+                    <div class="journey-number">5</div>
+                    <div class="journey-title">Unbox</div>
+                    <div class="journey-description">Recipe cards, rub samples, premium experience</div>
+                    <div class="journey-line"></div>
+                </div>
+
+                <div class="journey-step fade-in">
+                    <div class="journey-number">6</div>
+                    <div class="journey-title">Cook & Reorder</div>
+                    <div class="journey-description">Guided cooking, easy reorder, subscription</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. CHANNEL STRATEGY -->
+    <section class="dark-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">Where We Meet the Consumer</h2>
+
+            <div class="grid-2" style="margin-top: 3rem;">
+                <div class="channel-card fade-in">
+                    <div class="channel-title">App Commerce</div>
+                    <div class="channel-description">Integration with Toters, NokNok, and regional delivery apps. Reach existing digital shoppers where they browse.</div>
+                </div>
+
+                <div class="channel-card fade-in">
+                    <div class="channel-title">Direct-to-Consumer</div>
+                    <div class="channel-description">Proprietary app/website for subscription and bulk ordering. Direct customer relationship, data, and repeat value.</div>
+                </div>
+
+                <div class="channel-card fade-in">
+                    <div class="channel-title">Premium Retail</div>
+                    <div class="channel-description">Selective shelf placement in premium supermarkets and specialty shops. Brand visibility, trial, impulse purchase.</div>
+                </div>
+
+                <div class="channel-card fade-in">
+                    <div class="channel-title">HORECA</div>
+                    <div class="channel-description">Restaurants, hotels, catering companies. High-volume, consistent orders, brand legitimacy through professional use.</div>
+                </div>
+
+                <div class="channel-card fade-in" style="grid-column: 1 / -1;">
+                    <div class="channel-title">Future: Recurring Box</div>
+                    <div class="channel-description">Weekly or monthly subscription boxes curated by theme (grill season, weeknight dinners, hosting collections). Recurring revenue, customer lock-in.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. THE PLATFORM -->
+    <section class="light-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">The Engine Behind the Brand</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="platform-card fade-in">
+                    <div class="platform-title">Global Foodservice Supply (GFS)</div>
+                    <div class="platform-description">
+                        Global sourcing infrastructure. Beef from Argentina, New Zealand, USA. Lamb from Australia, New Zealand. Premium suppliers audited for quality, traceability, and sustainability. Our supply chain foundation.
+                    </div>
+                </div>
+
+                <div class="platform-card fade-in">
+                    <div class="platform-title">Prime Lab (Manufacturing Partner)</div>
+                    <div class="platform-description">
+                        State-of-the-art processing facility in Beirut. HACCP certified. Precision cutting, vacuum sealing, flash freezing, inventory management. Manufacturing excellence ensures consistency and food safety.
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 3rem; color: var(--muted-light); line-height: 1.8; fade-in">
+                <strong>Meat Boutique is the consumer-facing expression of a vertically integrated protein platform.</strong> We don't manufacture, we don't farm. We're the premium brand and service layer built on top of world-class infrastructure. This structure keeps COGS predictable, quality consistent, and margins high.
+            </p>
+        </div>
+    </section>
+
+    <!-- 13. GROWTH & SCALE -->
+    <section class="dark-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">Built to Scale</h2>
+
+            <div class="grid-2" style="margin-top: 3rem;">
+                <div class="growth-vector fade-in">
+                    <div class="growth-title">Geographic</div>
+                    <div class="growth-stages">
+                        <strong>Y1:</strong> Beirut metro area<br>
+                        <strong>Y2:</strong> Greater Lebanon<br>
+                        <strong>Y3+:</strong> Regional export (Syria, Jordan, Gulf)
+                    </div>
+                </div>
+
+                <div class="growth-vector fade-in">
+                    <div class="growth-title">Product Range</div>
+                    <div class="growth-stages">
+                        <strong>Y1:</strong> Core beef and lamb cuts<br>
+                        <strong>Y2:</strong> Full range (poultry, seafood)<br>
+                        <strong>Y3+:</strong> Ready-to-cook, meal solutions
+                    </div>
+                </div>
+
+                <div class="growth-vector fade-in">
+                    <div class="growth-title">Service Model</div>
+                    <div class="growth-stages">
+                        <strong>Y1:</strong> On-demand ordering<br>
+                        <strong>Y2:</strong> Subscription boxes<br>
+                        <strong>Y3+:</strong> Household protein management
+                    </div>
+                </div>
+
+                <div class="growth-vector fade-in">
+                    <div class="growth-title">Channel</div>
+                    <div class="growth-stages">
+                        <strong>Y1:</strong> App-first (Toters, NokNok)<br>
+                        <strong>Y2:</strong> Omnichannel (DTC + retail)<br>
+                        <strong>Y3+:</strong> Export-ready infrastructure
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 14. BUSINESS LOGIC -->
+    <section class="dark-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">The Economics</h2>
+
+            <div class="grid-2" style="margin-top: 3rem; margin-bottom: 3rem;">
+                <div class="metric-block fade-in">
+                    <div class="metric-value">40-55%</div>
+                    <div class="metric-label">Target gross margin</div>
+                </div>
+
+                <div class="metric-block fade-in">
+                    <div class="metric-value">3-5x</div>
+                    <div class="metric-label">Margin multiplier vs wholesale</div>
+                </div>
+
+                <div class="metric-block fade-in">
+                    <div class="metric-value">70%+</div>
+                    <div class="metric-label">Target repeat rate (subscribers)</div>
+                </div>
+
+                <div class="metric-block fade-in">
+                    <div class="metric-value">$45+</div>
+                    <div class="metric-label">Average order value target</div>
+                </div>
+            </div>
+
+            <div style="background: var(--card-dark); padding: 2rem; border-radius: 8px; border-left: 3px solid var(--accent-gold); fade-in">
+                <p style="color: var(--muted-dark); line-height: 1.8;">
+                    <strong style="color: var(--text-light);">Vertical Integration Advantage:</strong> By partnering with GFS for sourcing and Prime Lab for processing, we eliminate middleman markups. We buy commodity beef at wholesale, apply premium processing and portioning, and resell through our brand at 3-5x margin. This is a true arbitrage: commodity input, premium output.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. KEY DECISIONS -->
+    <section class="light-section section">
+        <div class="section-max">
+            <h2 class="heading-gold fade-in">Board-Level Decisions</h2>
+
+            <div class="grid-2" style="margin-top: 3rem;">
+                <div class="decision-card fade-in">
+                    <div class="decision-number">1</div>
+                    <div class="decision-question">Launch SKU Range</div>
+                    <div class="decision-context">Core 12-15 SKUs for Y1 launch: 3 cuts × 3 portion sizes + essentials. Full universe 40-50 SKUs by Y2.</div>
+                </div>
+
+                <div class="decision-card fade-in">
+                    <div class="decision-number">2</div>
+                    <div class="decision-question">Channel Priority</div>
+                    <div class="decision-context">Y1: app commerce + DTC. Y2: add premium retail. HORECA as ancillary. Focus wins before expanding.</div>
+                </div>
+
+                <div class="decision-card fade-in">
+                    <div class="decision-number">3</div>
+                    <div class="decision-question">Packaging Investment</div>
+                    <div class="decision-context">Premium bags ($0.15-0.30) and boxes ($2-7) are non-negotiable. Brand signal is the product itself. Invest early.</div>
+                </div>
+
+                <div class="decision-card fade-in">
+                    <div class="decision-number">4</div>
+                    <div class="decision-question">Pricing Architecture</div>
+                    <div class="decision-context">Single-portion: $8-12. Family portions: $20-35. Boxes: $60-150. Premium but not luxury. Accessible quality.</div>
+                </div>
+
+                <div class="decision-card fade-in">
+                    <div class="decision-number">5</div>
+                    <div class="decision-question">Subscription Timing</div>
+                    <div class="decision-context">Q3/Q4 Y1 launch. Build core DTC customer base first. Subscription requires customer trust and repeat behavior.</div>
+                </div>
+
+                <div class="decision-card fade-in">
+                    <div class="decision-number">6</div>
+                    <div class="decision-question">Brand Launch</div>
+                    <div class="decision-context">Soft launch via app marketplaces with PR + influencer seeding. No mass paid media until product-market fit confirmed.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 16. FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">MEAT BOUTIQUE</div>
+            <div class="footer-info">Confidential — Board Presentation 2026</div>
+            <div class="footer-info">Built on GFS + Prime Lab</div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when link clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Fade-in on scroll with Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Scroll to section from hero button
+        document.querySelector('.hero-button').addEventListener('click', () => {
+            document.getElementById('thesis').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Bounce arrow click
+        document.querySelector('.bounce-arrow').addEventListener('click', () => {
+            document.querySelector('.dark-section').nextElementSibling.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
